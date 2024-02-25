@@ -2,7 +2,7 @@
 </script>
 
 <header>
-	<h1>Tauri + SvelteKit</h1>
+	<h2>Tauri + SvelteKit</h2>
 </header>
 
 <style>
