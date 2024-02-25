@@ -1,12 +1,9 @@
 <script>
     import Sidemenu from '../lib/Sidemenu.svelte';
-	import Header from './Header.svelte';
 	import './styles.css';
 </script>
 
 <div class="app">
-	<Header />
-
 	<main>
 		<div id="SidemenuContainer">
 			<Sidemenu />
@@ -15,10 +12,6 @@
 			<slot />
 		</div>
 	</main>
-
-	<footer>
-		<p>visit <a href="https://github.com/cramke/risk_path">github/cramke/risk_path</a> to learn more</p>
-	</footer>
 </div>
 
 <style>
