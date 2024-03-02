@@ -11,35 +11,28 @@
 	
 	import L from 'leaflet';
 	import MapToolbar from './MapToolbar.svelte';
-	import MarkerPopup from './MarkerPopup.svelte';
-	import * as markerIcons from './markers.js';
 	let map;
 	
 	const markerLocations = [
-		[29.8283, -96.5795],
-		[37.8283, -90.5795],
-		[43.8283, -102.5795],
-		[48.40, -122.5795],
-		[43.60, -79.5795],
-		[36.8283, -100.5795],
-		[38.40, -122.5795],
+		[51, 9],
+		[50, 8]
 	];
 	
-	const initialView = [39.8283, -98.5795];
+	const initialView = [51, 9];
 	function createMap(container) {
-	  let m = L.map(container, {preferCanvas: true }).setView(initialView, 5);
-    L.tileLayer(
-	    'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-	    {
-	      attribution: `&copy;<a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>,
-	        &copy;<a href="https://carto.com/attributions" target="_blank">CARTO</a>`,
-	      subdomains: 'abcd',
-	      maxZoom: 14,
-	    }
-	  ).addTo(m);
+		let m = L.map(container, {preferCanvas: true }).setView(initialView, 10);
+		L.tileLayer(
+			'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+			{
+			attribution: `&copy;<a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>,
+				&copy;<a href="https://carto.com/attributions" target="_blank">CARTO</a>`,
+			subdomains: 'abcd',
+			maxZoom: 14,
+			}
+		).addTo(m);
 
-    return m;
-  }
+		return m;
+  	}
 	
 	let eye = true;
 	let lines = true;
@@ -57,7 +50,14 @@
 		toolbarComponent.$on('click-lines', ({ detail }) => lines = detail);
 		toolbarComponent.$on('click-reset', () => {
 			map.setView(initialView, 5, { animate: true })
-		})
+		});
+		toolbarComponent.$on('add-waypoint', ({ detail }) => {
+			if(detail) {
+				map.on('click', onMapClick);
+			} else {
+				map.off('click', onMapClick);
+			}
+		});
 
 		return div;
 	}
@@ -69,103 +69,40 @@
 		}
 	};
 	
-	// Create a popup with a Svelte component inside it and handle removal when the popup is torn down.
-	// `createFn` will be called whenever the popup is being created, and should create and return the component.
-	function bindPopup(marker, createFn) {
-		let popupComponent;
-		marker.bindPopup(() => {
-			let container = L.DomUtil.create('div');
-			popupComponent = createFn(container);
-			return container;
-		});
-
-		marker.on('popupclose', () => {
-			if(popupComponent) {
-				let old = popupComponent;
-				popupComponent = null;
-				// Wait to destroy until after the fadeout completes.
-				setTimeout(() => {
-					old.$destroy();
-				}, 500);
-
-			}
-		});
-	}
-	
-	let markers = new Map();
-	
-	function markerIcon(count) {
-		let html = `<div class="map-marker"><div>${markerIcons.library}</div><div class="marker-text">${count}</div></div>`;
-		return L.divIcon({
-			html,
-			className: 'map-marker'
-		});
-	}
-	
-
-	function createMarker(loc) {
-		let count = Math.ceil(Math.random() * 25);
-		let icon = markerIcon(count);
-		let marker = L.marker(loc, {icon});
-		bindPopup(marker, (m) => {
-			let c = new MarkerPopup({
-				target: m,
-				props: {
-					count
-				}
-			});
-			
-			c.$on('change', ({detail}) => {
-				count = detail;
-				marker.setIcon(markerIcon(count));
-			});
-			
-			return c;
-		});
-		
-		return marker;
-	}
-	
 	function createLines() {
 		return L.polyline(markerLocations, { color: '#E4E', opacity: 0.5 });
 	}
 
-	let markerLayers;
+	function onMapClick(e) {
+		const lat = e.latlng.lat;
+		const lng = e.latlng.lng;
+		markerLocations.push([lat, lng]);
+		lineLayers.remove();
+		lineLayers = createLines();
+		lineLayers.addTo(map);	
+	}
+
 	let lineLayers;
-  function mapAction(container) {
-    map = createMap(container); 
+	function mapAction(container) {
+		map = createMap(container); 
 		toolbar.addTo(map);
 		
-		markerLayers = L.layerGroup()
- 		for(let location of markerLocations) {
- 			let m = createMarker(location);
-			markerLayers.addLayer(m);
- 		}
-		
 		lineLayers = createLines();
-		
-		markerLayers.addTo(map);
 		lineLayers.addTo(map);
-		
-    return {
-       destroy: () => {
-				 toolbar.remove();
-				 map.remove();
-				 map = null;
-			 }
-    };
+
+		map.on('click', onMapClick);
+			
+		return {
+		destroy: () => {
+					toolbar.remove();
+					map.remove();
+					map = null;
+				}
+		};
 	}
 	
 	// We could do these in the toolbar's click handler but this is an example
 	// of modifying the map with reactive syntax.
-	$: if(markerLayers && map) {
-		if(eye) {
-			markerLayers.addTo(map);
-		} else {
-			markerLayers.remove();
-		}
-	}
-	
 	$: if(lineLayers && map) {
 		if(lines) {
 			lineLayers.addTo(map);
@@ -175,8 +112,8 @@
 	}
 
 	function resizeMap() {
-	  if(map) { map.invalidateSize(); }
-  }
+		if(map) { map.invalidateSize(); }
+  	}
 
 </script>
 <svelte:window on:resize={resizeMap} />
@@ -206,4 +143,5 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
    crossorigin=""/>
+<div>{markerLocations}</div>
 <div class="map" use:mapAction />

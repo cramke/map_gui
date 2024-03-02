@@ -9,10 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Changelog
+- Button to create waypoints and connect with lines
 ### Changed
 ### Deprecated
 ### Removed
 - Map/Tutorial
+- Icons and Popups of markers
 ### Fixed
 - Map is redrawn on changes of field of view
 ### Security
