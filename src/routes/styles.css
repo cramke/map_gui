@@ -78,8 +78,7 @@ pre {
 	margin: 0 auto;
 }
 
-input,
-button {
+input, button {
 	font-size: inherit;
 	font-family: inherit;
 }
