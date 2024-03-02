@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changelog
 - Button to create waypoints and connect with lines
 ### Changed
+- Redesign sidebar
 ### Deprecated
 ### Removed
 - Map/Tutorial
