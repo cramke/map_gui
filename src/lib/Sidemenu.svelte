@@ -7,7 +7,6 @@
     <ul class="sidemenu">
         <li><a href="/">Home</a></li>
         <li><a href="/map">Map</a></li>
-        <li><a href="/map/tutorial">Map Tutorial</a></li>
         <li><a href="/settings">Settings</a></li>
     </ul>
     <div class="corner">
