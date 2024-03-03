@@ -29,7 +29,7 @@
     }
 
     #BodyContainer {
-        flex: 3;
+        flex: 7;
     }
 
 	footer {

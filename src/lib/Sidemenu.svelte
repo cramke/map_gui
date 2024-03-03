@@ -8,6 +8,10 @@
       <path fill="#212121" d="M20.8,35.5v-9.6h6.4v9.6h8V22.7H40L24,8.3L8,22.7h4.8v12.8H20.8z"/>
     </g>
 
+    <g id="settings">
+      <path fill="#90A4AE" d="M24 13.616v-3.232c-1.651-.587-2.694-.752-3.219-2.019v-.001c-.527-1.271.1-2.134.847-3.707l-2.285-2.285c-1.561.742-2.433 1.375-3.707.847h-.001c-1.269-.526-1.435-1.576-2.019-3.219h-3.232c-.582 1.635-.749 2.692-2.019 3.219h-.001c-1.271.528-2.132-.098-3.707-.847l-2.285 2.285c.745 1.568 1.375 2.434.847 3.707-.527 1.271-1.584 1.438-3.219 2.02v3.232c1.632.58 2.692.749 3.219 2.019.53 1.282-.114 2.166-.847 3.707l2.285 2.286c1.562-.743 2.434-1.375 3.707-.847h.001c1.27.526 1.436 1.579 2.019 3.219h3.232c.582-1.636.75-2.69 2.027-3.222h.001c1.262-.524 2.12.101 3.698.851l2.285-2.286c-.744-1.563-1.375-2.433-.848-3.706.527-1.271 1.588-1.44 3.221-2.021zm-12 2.384c-2.209 0-4-1.791-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4z"/>
+    </g>
+
     <g id="search">
       <path fill="#90A4AE" d="M22.9,20.1h-1.5l-0.5-0.5c1.8-2.1,2.9-4.8,2.9-7.7C23.8,5.3,18.5,0,11.9,0S0,5.3,0,11.9s5.3,11.9,11.9,11.9
         c3,0,5.7-1.1,7.7-2.9l0.5,0.5v1.4l9.1,9.1l2.7-2.7L22.9,20.1z M11.9,20.1c-4.5,0-8.2-3.7-8.2-8.2s3.7-8.2,8.2-8.2s8.2,3.7,8.2,8.2
@@ -29,30 +33,25 @@
 <nav class="nav__cont">
   <ul class="nav">
     <li class="nav__items ">
-      <svg class="nav__svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-        <use xlink:href="#home"></use>
-      </svg>
-      <a href="/">Home</a>
+      <a class="nav__svg" href="/" role="button">
+        <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+          <use xlink:href="#home"></use></svg>
+          Home</a>
     </li>
     
+      
     <li class="nav__items ">
-      <svg class="nav__svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-        <use xlink:href="#search"></use>
-      </svg>
-      <a href="/settings">Search</a>
+      <a class="nav__svg" href="/map" role="button">
+        <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+          <use xlink:href="#map"></use></svg>
+          Map</a>
     </li>
       
     <li class="nav__items ">
-      <svg class="nav__svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-        <use xlink:href="#map"></use>
-      </svg>
-      <a href="/map">Map</a>
-    </li>
-      
-    <li class="nav__items ">
-      <svg class="nav__svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 35.6">
-        <use xlink:href="#planner"></use></svg>
-      <a href="/settings">Settings</a>
+      <a class="nav__svg" href="/settings" role="button">
+        <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <use xlink:href="#settings"></use></svg>
+        Settings</a>
     </li>
         
   </ul>
@@ -60,8 +59,6 @@
 
 <style>
   .nav__cont {
-    position: fixed;
-    width: 400px;
     top:0;
     height: 100vh;
     z-index: 100;
@@ -70,58 +67,49 @@
     transition:width .3s ease;
     cursor:pointer;
     box-shadow:4px 7px 10px rgba(0,0,0,.4);
-
-    &:hover {
-        width:200px;
-    }
-
-    @media screen and (min-width: 600px) {
-        width: 80px;
-    }
   }
 
   .nav {
-      list-style-type: none;
-      color:white;
+    list-style-type: none;
+    color:white;
 
-      &:first-child {
-          padding-top:1.5rem;
-      }
+    &:first-child {
+        padding-top:1.5rem;
+    }
   }
 
   .nav__items {
-      padding-bottom:4rem;
-      font-family: 'roboto';
+    padding-bottom:4rem;
+    font-family: 'roboto';
   }
 
   a {
-      position: relative;
-      display:block;
-      top:-35px;
-      padding-left:25px;
-      padding-right:15px;
-      transition:all .3s ease;
-      margin-left:25px;
-      margin-right:10px;
-      text-decoration: none;
-      color:white;
-      font-family: 'roboto';
-      font-weight: 100;
-      font-size: 1.35em;
+    position: relative;
+    display:block;
+    top:-25px;
+    padding-right:5px;
+    transition:all .3s ease;
+    margin-right:5px;
+    text-decoration: none;
+    color:white;
+    font-family: 'roboto';
+    font-weight: 100;
+    font-size: 1em;
+    align-items: center;
   }
 
   &:after {
-      content:'';
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top:0;
-      left:0;
-      border-radius:2px;
-      background:radial-gradient(circle at 94.02% 88.03%, #54a4ff, transparent 100%);
-      opacity:0;
-      transition:all .5s ease;
-      z-index: -10;
+    content:'';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top:0;
+    left:0;
+    border-radius:2px;
+    background:radial-gradient(circle at 94.02% 88.03%, #54a4ff, transparent 100%);
+    opacity:0;
+    transition:all .5s ease;
+    z-index: -10;
   }
 
   &:hover a:after {

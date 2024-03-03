@@ -17,6 +17,8 @@
 		[51, 9],
 		[50, 8]
 	];
+
+	let m = { lat: 0.0, lng: 0.0 };
 	
 	const initialView = [51, 9];
 	function createMap(container) {
@@ -68,6 +70,11 @@
 			toolbarComponent = null;
 		}
 	};
+
+	function handleMousemove(event) {
+		m.lat = event.latlng.lat;
+		m.lng = event.latlng.lng;
+	}
 	
 	function createLines() {
 		return L.polyline(markerLocations, { color: '#E4E', opacity: 0.5 });
@@ -90,7 +97,7 @@
 		lineLayers = createLines();
 		lineLayers.addTo(map);
 
-		map.on('click', onMapClick);
+		map.on('mousemove', handleMousemove);
 			
 		return {
 		destroy: () => {
@@ -129,4 +136,7 @@
    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
    crossorigin=""/>
 <div>{markerLocations}</div>
+<div>
+	The mouse position is {m.lat} x {m.lng}
+</div>
 <div class="map" use:mapAction />
