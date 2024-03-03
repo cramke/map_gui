@@ -119,21 +119,6 @@
 <svelte:window on:resize={resizeMap} />
 
 <style>
-    .map :global(.marker-text) {
-        width:100%;
-		text-align:center;
-		font-weight:600;
-		background-color:#444;
-		color:#EEE;
-		border-radius:0.5rem;
-	}
-	
-	.map :global(.map-marker) {
-        width:30px;
-		transform:translateX(-50%) translateY(-25%);
-        height: 100vh; /* or any other height */
-	}
-
     .map {
         height: 100vh; /* or any other height */
         width: 100%; /* or any other width */
